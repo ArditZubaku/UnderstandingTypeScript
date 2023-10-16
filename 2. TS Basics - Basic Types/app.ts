@@ -20,3 +20,18 @@ combinedValues = add;
 // combinedValues = printNumbers;
 
 console.log(combinedValues(8, 8));
+
+// Returning void means => i will not use whatever u return
+function addCallbacks(n1: number, n2: number, callback: (n: number) => void) {
+  const res = n1 + n2;
+  callback(res);
+  return 1;
+}
+
+addCallbacks(5, 10, () => {
+  console.log("Ardit");
+});
+
+addCallbacks(5, 10, (result) => {
+  console.log(result);
+});
