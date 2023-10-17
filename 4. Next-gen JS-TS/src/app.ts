@@ -23,3 +23,16 @@ const test4 = (a: number, b: number = 5) => {
 
 test4(5);
 test4(5, 10);
+
+const hobbies: string[] = ["Reading", "Running"];
+const activeHobbies: string[] = ["Writing", ...hobbies];
+
+activeHobbies.push(...hobbies);
+
+const obj = {
+  key: "value",
+  key2: "value2",
+};
+
+// const obj2 = obj;
+const obj2 = { ...obj };
