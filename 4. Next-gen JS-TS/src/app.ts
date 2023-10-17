@@ -15,3 +15,11 @@ test2(1);
 const test3: (a: number) => number = (b: number): number => {
   return 0 * b;
 };
+
+// Default params should be the last ones
+const test4 = (a: number, b: number = 5) => {
+  console.log(a + b);
+};
+
+test4(5);
+test4(5, 10);
