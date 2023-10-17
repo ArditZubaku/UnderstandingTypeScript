@@ -36,3 +36,25 @@ const obj = {
 
 // const obj2 = obj;
 const obj2 = { ...obj };
+
+const add = (...numbers: number[]): number => {
+  return numbers.reduce(
+    (currentResult: number, currentValue: number): number => {
+      return currentResult + currentValue;
+    },
+    0
+  );
+};
+
+const result: number = add(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+console.log(result);
+
+const add3params = (...numbers: [number, number, number]): number => {
+  let res: number = 0;
+  for (const num of numbers) res += num;
+  return res;
+};
+
+// const result2: number = add3params(1, 2, 3, 4, 5, 6, 7);
+const result2: number = add3params(1, 2, 3);
+console.log(result2);
