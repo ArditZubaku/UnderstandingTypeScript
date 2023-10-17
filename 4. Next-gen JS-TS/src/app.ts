@@ -58,3 +58,13 @@ const add3params = (...numbers: [number, number, number]): number => {
 // const result2: number = add3params(1, 2, 3, 4, 5, 6, 7);
 const result2: number = add3params(1, 2, 3);
 console.log(result2);
+
+const [testHobby, testHobby2, whateverName, ...otherHobbies] = hobbies;
+console.log(testHobby);
+console.log(testHobby2);
+console.log(whateverName);
+
+console.log(otherHobbies);
+
+const { key: differentName, key2: stringIsADifferentNameHereNotAType } = obj;
+console.log(differentName);
