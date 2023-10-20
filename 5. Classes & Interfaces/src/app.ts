@@ -1,10 +1,11 @@
 class Department {
   // public is the default
   //   private id: number;
-  //   public name: string;
+  //   public readonly name: string;
   private employees: string[] = [];
 
-  constructor(public name: string, private id: number) {
+  // readonly -> shouldn't change after initialization
+  constructor(public readonly name: string, private id: number) {
     // this.name = name;
   }
 
@@ -16,6 +17,7 @@ class Department {
   }
 
   addEmployee(employee: string) {
+    // this.name = 'Test'
     this.employees.push(employee);
   }
 
