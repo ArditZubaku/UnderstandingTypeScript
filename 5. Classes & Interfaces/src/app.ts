@@ -1,17 +1,18 @@
 class Department {
   // public is the default
-  public name: string;
+  //   private id: number;
+  //   public name: string;
   private employees: string[] = [];
 
-  constructor(name: string) {
-    this.name = name;
+  constructor(public name: string, private id: number) {
+    // this.name = name;
   }
 
   // Ensures that only a type like this class can call this method
   // Gotta be called 'this', and it is not considered a parameter
   describe(this: this) {
     // 'this' represents whoever calls the method
-    console.log("Department" + this.name);
+    console.log("Department with ID: " + this.id + ", name: " + this.name);
   }
 
   addEmployee(employee: string) {
@@ -24,7 +25,7 @@ class Department {
   }
 }
 
-const department = new Department("Test");
+const department = new Department("Test", 1);
 console.log(department);
 
 department.addEmployee("E1");
