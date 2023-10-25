@@ -2,7 +2,9 @@ class Department {
   // public is the default
   //   private id: number;
   //   public readonly name: string;
-  private employees: string[] = [];
+  // private employees: string[] = [];
+  // Protected -> available in the child classes
+  protected employees: string[] = [];
 
   // readonly -> shouldn't change after initialization
   constructor(public readonly name: string, private id: number) {
@@ -33,6 +35,15 @@ class ITDepartment extends Department {
     super("IT", id); // 'super' gotta be the first thing to be called
     this.admins = admins;
   }
+
+  // Overriding methods
+  addEmployee(employee: string): void {
+    if (employee === "Max") {
+      return;
+    }
+
+    this.employees.push(employee);
+  }
 }
 
 const department = new Department("Test", 1);
@@ -44,6 +55,10 @@ const departmentIT: Department = new ITDepartment(1, ["Test"]);
 department.addEmployee("E1");
 department.addEmployee("E2");
 // department.employees[3] = "TestEmployee";
+
+departmentIT.addEmployee("Max");
+departmentIT.addEmployee("NotMax");
+departmentIT.printEmployeesInformation();
 
 department.describe();
 department.printEmployeesInformation();
