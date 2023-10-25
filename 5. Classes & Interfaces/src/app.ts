@@ -5,10 +5,20 @@ class Department {
   // private employees: string[] = [];
   // Protected -> available in the child classes
   protected employees: string[] = [];
+  static currentYear: number = 2023;
 
   // readonly -> shouldn't change after initialization
-  constructor(public readonly name: string, private id: number) {
+  // you can not declare the constructor as static
+  /* static */ constructor(public readonly name: string, private id: number) {
     // this.name = name;
+    // This works -> Static => belongs to the class, not the instance
+    Department.currentYear = 0;
+    // This doesn't work -> "this" => References the instance
+    // this.currentYear = 1;
+  }
+
+  static createEmployee(name: string) {
+    return { name };
   }
 
   // Ensures that only a type like this class can call this method
@@ -65,6 +75,10 @@ class ITDepartment extends Department {
 
 const department = new Department("Test", 1);
 console.log(department);
+console.log(Department.currentYear);
+
+const e1 = Department.createEmployee("Test");
+console.log(e1);
 
 // const test: ITDepartment = new Department("TEST", 2);
 // const departmentIT: Department = new ITDepartment(1, ["Test"]);
