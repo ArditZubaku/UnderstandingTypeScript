@@ -69,6 +69,29 @@ class NormalClass extends Test {
   }
 }
 
+class AccountingDepartment extends Department {
+  describe(this: Department): void {
+    console.log(this);
+  }
+
+  // In a static context, "this" -> will refer to the class, not the instance
+  private static instance: AccountingDepartment;
+
+  private constructor(name: string, id: number) {
+    super(name, id);
+  }
+
+  // Singleton pattern
+  static getInstance() {
+    // if (this.instance)
+    if (AccountingDepartment.instance) {
+      return this.instance;
+    }
+    this.instance = new AccountingDepartment("Accounting", 1);
+    return this.instance;
+  }
+}
+
 class ITDepartment extends Department {
   public admins: string[];
   private lastReport: string;
@@ -114,6 +137,11 @@ console.log(Department.currentYear);
 
 const e1 = Department.createEmployee("Test");
 console.log(e1);
+
+const accounting: AccountingDepartment = AccountingDepartment.getInstance();
+const accounting2: Department = AccountingDepartment.getInstance();
+// The same object is returned
+console.log(accounting, accounting2);
 
 // const test: ITDepartment = new Department("TEST", 2);
 // const departmentIT: Department = new ITDepartment(1, ["Test"]);
