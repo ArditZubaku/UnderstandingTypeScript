@@ -1,4 +1,5 @@
-class Department {
+// If you have 1 or more abstract methods => you should declare the class as abstract
+abstract class Department {
   // public is the default
   //   private id: number;
   //   public readonly name: string;
@@ -23,10 +24,13 @@ class Department {
 
   // Ensures that only a type like this class can call this method
   // Gotta be called 'this', and it is not considered a parameter
-  describe(this: this) {
-    // 'this' represents whoever calls the method
-    console.log("Department with ID: " + this.id + ", name: " + this.name);
-  }
+  // describe(this: this) {
+  //   // 'this' represents whoever calls the method
+  //   console.log("Department with ID: " + this.id + ", name: " + this.name);
+  // }
+
+  // Abstract methods have no body and are declared only in abstract classes
+  abstract describe(this: Department): void;
 
   addEmployee(employee: string) {
     // this.name = 'Test'
@@ -39,6 +43,32 @@ class Department {
   }
 }
 
+// Abstract classes that extend an abstract class are not enforced to implement abstract methods
+abstract class Test extends Department {
+  abstract test(): void;
+
+  // Can not initialize an abstract property
+  // abstract property: string = 'Test';
+  abstract property: string;
+
+  normalMethod(): void {
+    console.log("Normal method");
+  }
+}
+
+// When you extend an abstract class that extends another abstract class, you are enforced to implement the abstract methods of both classes
+class NormalClass extends Test {
+  property: string = "Initialized in child class";
+
+  test(): void {
+    console.log("From Test class");
+  }
+
+  describe(this: Department): void {
+    console.log("From Department class");
+  }
+}
+
 class ITDepartment extends Department {
   public admins: string[];
   private lastReport: string;
@@ -46,6 +76,11 @@ class ITDepartment extends Department {
     super("IT", id); // 'super' gotta be the first thing to be called
     this.admins = admins;
     this.lastReport = admins[0];
+  }
+
+  // When you inherit an abstract class, you are enforced to implement the abstract methods
+  describe(): void {
+    console.log("Describe method");
   }
 
   // Overriding methods
@@ -73,8 +108,8 @@ class ITDepartment extends Department {
   }
 }
 
-const department = new Department("Test", 1);
-console.log(department);
+// You can not instantiate an abstract class
+// const department = new Department("Test", 1);
 console.log(Department.currentYear);
 
 const e1 = Department.createEmployee("Test");
@@ -84,8 +119,8 @@ console.log(e1);
 // const departmentIT: Department = new ITDepartment(1, ["Test"]);
 const departmentIT: ITDepartment = new ITDepartment(1, ["Test"]);
 
-department.addEmployee("E1");
-department.addEmployee("E2");
+// department.addEmployee("E1");
+// department.addEmployee("E2");
 // department.employees[3] = "TestEmployee";
 
 departmentIT.addEmployee("Max");
@@ -95,16 +130,16 @@ departmentIT.printEmployeesInformation();
 departmentIT.mostRecentReport = "Test";
 console.log(departmentIT.mostReports);
 
-department.describe();
-department.printEmployeesInformation();
+// department.describe();
+// department.printEmployeesInformation();
 
 // const departmentCopy = {
 //   describe: department.describe,
 // };
-const departmentCopy = {
-  name: "test",
-  describe: department.describe,
-};
+// const departmentCopy = {
+//   name: "test",
+//   describe: department.describe,
+// };
 
 // Undefined -> bc it doesnt have the same properties
 // departmentCopy.describe();
