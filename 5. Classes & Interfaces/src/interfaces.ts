@@ -23,7 +23,9 @@ obj = {
 obj.greet("Hi there");
 
 interface Greetable {
-  name: string;
+  // You can not use public/private modifiers inside an interface
+  // With readonly you can only set a value once
+  readonly name: string;
   greet(phrase: string): void;
 }
 
@@ -39,4 +41,5 @@ class Human implements Greetable {
   }
 }
 const person: Greetable = new Human("Test person");
+// person.name = 'Test';
 person.greet("Hello");
