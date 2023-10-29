@@ -1,6 +1,6 @@
 interface Person {
   // You can not initialize an interface field since they all are abstract by default
-  name: string;
+  readonly name: string;
   age: number;
 
   // See, you can only declare the method structure, you can not implement it
@@ -22,15 +22,20 @@ obj = {
 
 obj.greet("Hi there");
 
-interface Greetable {
+interface Named {
+  readonly name: string;
+}
+
+// An interface can extend how many interfaces that you want
+interface Greetable extends Named, Person {
   // You can not use public/private modifiers inside an interface
   // With readonly you can only set a value once
-  readonly name: string;
   greet(phrase: string): void;
 }
 
 class Human implements Greetable {
   name: string;
+  age: number = 21;
 
   constructor(name: string) {
     this.name = name;
@@ -40,6 +45,18 @@ class Human implements Greetable {
     console.log(phrase + " " + this.name);
   }
 }
+
 const person: Greetable = new Human("Test person");
 // person.name = 'Test';
 person.greet("Hello");
+
+type AddFn = (a: number, b: number) => number;
+let add: AddFn;
+add = (a: number, b: number) => a + b;
+
+interface AddFunc {
+  (a: number, b: number): number;
+}
+
+// const addFunc: AddFunc = (a: string, b: number) => a + b;
+const addFunc: AddFunc = (a: number, b: number) => a + b;
