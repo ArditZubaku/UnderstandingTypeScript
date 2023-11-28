@@ -124,8 +124,20 @@ class ITDepartment extends Department {
     throw new Error("No reports available");
   }
 
+  getMostReports(): string {
+    if (this.lastReport) {
+      return this.lastReport;
+    }
+    throw new Error("No reports available");
+  }
+
   // This is considered a property, you access it as a property
   set mostRecentReport(report: string) {
+    if (!report) throw new Error("Please pass in a valid value!");
+    this.lastReport = report;
+  }
+
+  setMostRecentReport(report: string) {
     if (!report) throw new Error("Please pass in a valid value!");
     this.lastReport = report;
   }
@@ -157,6 +169,9 @@ departmentIT.printEmployeesInformation();
 
 departmentIT.mostRecentReport = "Test";
 console.log(departmentIT.mostReports);
+
+departmentIT.setMostRecentReport("Test");
+console.log(departmentIT.getMostReports());
 
 // department.describe();
 // department.printEmployeesInformation();
