@@ -166,3 +166,21 @@ moveAnimal({
   type: "horse",
   runningSpeed: 10,
 });
+
+// Type casting
+const userInputElement1 = <HTMLInputElement>(
+  document.getElementById("user-input")
+);
+
+// ! - tells TS that it will never be null
+// const userInputElement2 = document.getElementById(
+//   "user-input"
+// )! as HTMLInputElement;
+
+const userInputElement2 = document.getElementById("user-input");
+
+// userInputElement2.value = "Hi there";
+
+if (userInputElement2) {
+  (userInputElement2 as HTMLInputElement).value = "Hi there";
+}
