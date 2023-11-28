@@ -233,3 +233,14 @@ const fetchedUserData = {
 };
 
 console.log(fetchedUserData?.job?.title);
+
+// const userInput = null;
+const userInput = "";
+const undefinedUserInput = null || undefined;
+
+// Takes the empty string as falsy value
+const storedUserData = userInput || "DEFAULT";
+// Only when the user input is undefined or null
+const storedUserData2 = undefinedUserInput ?? "DEFAULT";
+
+console.log(storedUserData);
