@@ -63,3 +63,62 @@ const universal: Universal = 123;
 // const universal2: Universal = '123';
 const universal2: Universal2 = "123";
 const universal3: Universal2 = true;
+
+console.log(
+  "------------------------------------------------------------------------------"
+);
+
+function add(a: Combinable, b: Combinable) {
+  // Type guard
+  if (typeof a === "string" || typeof b === "string")
+    return a.toString() + b.toString();
+  return a + b;
+}
+
+type UnknownEmployee = Employee | Admin;
+
+function printEmployeeInfo(employee: UnknownEmployee) {
+  console.log("Name: " + employee.name);
+  // Check if the privileges property exists in the employee type
+  if ("privileges" in employee) {
+    console.log("Privileges: " + employee.privileges);
+  }
+  //   if (employee.hasOwnProperty("startDate")) {
+  //     console.log("Start date:" + employee.startDate);
+  //   }
+  if ("startDate" in employee) {
+    console.log("Start date:" + employee.startDate);
+  }
+}
+
+class Car {
+  public drive() {
+    console.log("Driving");
+  }
+}
+
+class Truck {
+  public drive() {
+    console.log("Driving a truck...");
+  }
+
+  loadCargo(amount: number) {
+    console.log("Loading cargo ..." + amount);
+  }
+}
+
+type Vehicle = Car | Truck;
+
+const vehicle1 = new Truck();
+const vehicle2 = new Car();
+
+function useVehicle(vehicle: Vehicle) {
+  vehicle.drive();
+  //   if('loadCargo' in vehicle)
+  if (vehicle instanceof Truck) {
+    vehicle.loadCargo(10);
+  }
+}
+
+useVehicle(vehicle1);
+useVehicle(vehicle2);
