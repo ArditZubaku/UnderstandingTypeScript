@@ -201,3 +201,21 @@ const errorBag: ErrorContainer = {
   // Can be interpreted as a string
   1: "Is allowed",
 };
+
+// Using function overload
+function plus(a: number, b: number): number;
+function plus(a: string, b: string): string;
+function plus(a: string, b: number): string;
+function plus(a: number, b: string): string;
+function plus(a: Combinable, b: Combinable): Combinable {
+  // Type guard
+  if (typeof a === "string" || typeof b === "string")
+    return a.toString() + b.toString();
+  return a + b;
+}
+
+// const result = plus(1, 2) as number;
+// const result = <string>plus("String", "Number");
+const result = plus(1, 1);
+const result2 = plus("String", "Number");
+const result3 = plus("String", 2);
