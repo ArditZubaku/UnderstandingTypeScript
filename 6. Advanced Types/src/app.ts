@@ -219,3 +219,17 @@ function plus(a: Combinable, b: Combinable): Combinable {
 const result = plus(1, 1);
 const result2 = plus("String", "Number");
 const result3 = plus("String", 2);
+const t1: Combinable = "Test";
+const t2: Combinable = 2;
+const result4 = plus(t1, t2);
+
+const fetchedUserData = {
+  id: "u1",
+  name: "Max",
+  job: {
+    title: "CEO",
+    description: "My own company",
+  },
+};
+
+console.log(fetchedUserData?.job?.title);
