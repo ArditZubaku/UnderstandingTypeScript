@@ -184,3 +184,20 @@ const userInputElement2 = document.getElementById("user-input");
 if (userInputElement2) {
   (userInputElement2 as HTMLInputElement).value = "Hi there";
 }
+
+interface ErrorContainer {
+  // { email: 'Not a valid email address', username: 'Must start with a character'}
+  // number | symbol | string
+  [property: string]: string;
+  id: string;
+  // Cant do this bc of the index type, we can now add as much properties as we want as long as they satisfy the index type constraint
+  // id2: number;
+}
+
+const errorBag: ErrorContainer = {
+  id: "1",
+  email: "Not a valid email address",
+  anotherProperty: "Another property",
+  // Can be interpreted as a string
+  1: "Is allowed",
+};
