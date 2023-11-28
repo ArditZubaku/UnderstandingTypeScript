@@ -15,6 +15,18 @@ interface IAdmin {
   privileges: string[];
 }
 
+class Test {
+  name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+
+interface ITest extends Test {
+  test: string;
+}
+
 type Employee = {
   name: string;
   startDate: Date;
@@ -122,3 +134,35 @@ function useVehicle(vehicle: Vehicle) {
 
 useVehicle(vehicle1);
 useVehicle(vehicle2);
+
+interface Bird {
+  // Literal type
+  type: "bird";
+  flyingSpeed: number;
+}
+
+interface Horse {
+  type: "horse";
+  runningSpeed: number;
+}
+
+type Animal = Bird | Horse;
+
+function moveAnimal(animal: Animal) {
+  switch (animal.type) {
+    case "bird":
+      animal.flyingSpeed = 10;
+      break;
+    case "horse":
+      animal.runningSpeed = 10;
+      break;
+    default:
+      break;
+  }
+}
+
+moveAnimal({ type: "bird", flyingSpeed: 10 });
+moveAnimal({
+  type: "horse",
+  runningSpeed: 10,
+});
