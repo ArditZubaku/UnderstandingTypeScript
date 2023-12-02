@@ -40,3 +40,7 @@ const mergedObj2 = merge<
     age: 50,
   }
 );
+
+function merge2<T extends object, K extends object>(objA: T, objB: K) {
+  return Object.assign({}, objA, objB);
+}
