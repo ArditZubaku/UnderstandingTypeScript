@@ -119,3 +119,37 @@ const booleanStorage = new StorageClass<boolean>();
 booleanStorage.addItem(true);
 booleanStorage.addItem(false);
 console.log(booleanStorage.getItems());
+
+interface ICourseGoal {
+  title: string;
+  description: string;
+  completeUntil: Date;
+}
+
+function createCourseGoal(
+  title: string,
+  description: string,
+  date: Date
+): ICourseGoal {
+  // Partial makes every property optional
+  let courseGoal: Partial<ICourseGoal> = {};
+  courseGoal.completeUntil = date;
+  courseGoal.description = description;
+  courseGoal.title = title;
+
+  return courseGoal as ICourseGoal;
+  // return { title, description, completeUntil: date };
+}
+
+const arr: Readonly<string[]> = ["Max", "Anna"];
+// arr.push("Manuel");
+// arr.pop();
+
+// Can not change the properties values nor add new properties
+const readonlyObj: Readonly<ICourseGoal> = {
+  description: "Test",
+  completeUntil: new Date(),
+  title: "Test",
+};
+
+// readonlyObj.description = "Test2";
