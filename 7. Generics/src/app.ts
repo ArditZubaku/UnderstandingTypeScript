@@ -9,3 +9,34 @@ const promise: Promise<string> = new Promise((resolve, reject) => {
     resolve("This is done");
   }, 2000);
 });
+
+function merge<T, K>(objA: T, objB: K) {
+  return Object.assign({}, objA, objB);
+}
+
+const mergedObj = merge(
+  {
+    name: "Test",
+  },
+  {
+    age: 30,
+  }
+);
+
+console.log(mergedObj.name);
+
+const mergedObj2 = merge<
+  {
+    name: string;
+  },
+  {
+    age: number;
+  }
+>(
+  {
+    name: "Test",
+  },
+  {
+    age: 50,
+  }
+);
