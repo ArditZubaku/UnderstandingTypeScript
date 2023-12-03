@@ -54,3 +54,22 @@ class Person {
 
 const person = new Person();
 console.log(person);
+
+// ----------------------------------------------------------------
+
+class Product {
+  private _price: number;
+  constructor(private title: string, price: number) {
+    this.title = title;
+    this._price = price;
+  }
+
+  set price(value: number) {
+    if (value > 0) this._price = value;
+    else throw new Error("Invalid price, should be positive");
+  }
+
+  getPriceWithTax(tax: number) {
+    return this.price * (1 + tax);
+  }
+}
