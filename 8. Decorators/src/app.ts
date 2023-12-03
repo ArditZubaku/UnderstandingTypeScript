@@ -14,7 +14,22 @@ function Logger(logString: string) {
   };
 }
 
-@Logger("LOGGING - PERSON")
+function WithTemplate(template: string, hookID: string) {
+  // The actual decorator
+  return function (constructor: any) {
+    const hookElement = document.getElementById(hookID);
+
+    const person: Person = new constructor();
+
+    if (hookElement) {
+      hookElement.innerHTML = template;
+      hookElement.querySelector("h1")!.textContent = person.name;
+    }
+  };
+}
+
+@WithTemplate("<h1>My person OBJ</h1>", "app")
+// @Logger("LOGGING - PERSON")
 class Person {
   name = "John";
 
