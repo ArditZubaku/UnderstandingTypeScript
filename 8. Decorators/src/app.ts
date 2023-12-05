@@ -58,20 +58,58 @@ console.log(person);
 
 // ----------------------------------------------------------------
 
-function Log(prototype: any, propertyName: string | Symbol) {
+function OnPropertyDecorator(prototype: any, propertyName: string | Symbol) {
+  // If it is a static property instead of prototype we get the constructor function
   console.log("Property decorator");
   console.log(prototype, propertyName);
 }
 
+// Accessor decorator
+function OnAccessorDecorator(
+  target: any | Function,
+  accessorName: string,
+  descriptor: PropertyDescriptor
+) {
+  console.log(
+    `Accessors. TypeScript supports getters/setters as a way of intercepting accesses to a member of an object. This gives you a way of having finer-grained control over how a member is accessed on each object. Let's convert a simple class to use get and set .`
+  );
+
+  console.log("Accessor decorator");
+  console.log(target, accessorName, descriptor);
+}
+
+function OnMethodDecorator(
+  target: any | Function,
+  methodName: string | Symbol,
+  descriptor: PropertyDescriptor
+) {
+  console.log("Method decorator");
+  console.log(
+    "The accessor decorator could be used for methods too, since it is basically the same"
+  );
+
+  console.log(target, methodName, descriptor);
+}
+
+function OnParameterDecorator(
+  target: any | Function,
+  methodName: string | Symbol,
+  position: number
+) {
+  console.log("Parameter decorator");
+  console.log(target, methodName, position);
+}
+
 class Product {
   // It executes whenever JS registers this, like whenever it reaches this line when it scans the code.
-  @Log
+  @OnPropertyDecorator
   private _price: number;
   constructor(private title: string, price: number) {
     this.title = title;
     this._price = price;
   }
 
+  @OnAccessorDecorator
   set price(value: number) {
     if (value > 0) this._price = value;
     else throw new Error("Invalid price, should be positive");
@@ -81,7 +119,11 @@ class Product {
     return this._price;
   }
 
-  getPriceWithTax(tax: number) {
+  @OnMethodDecorator
+  getPriceWithTax(
+    @OnParameterDecorator
+    tax: number
+  ) {
     return this.price * (1 + tax);
   }
 }
