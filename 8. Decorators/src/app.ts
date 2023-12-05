@@ -24,17 +24,25 @@ function WithTemplate(template: string, hookID: string) {
   console.log("Template Factory");
 
   // The actual decorator
-  return function (constructor: any) {
-    console.log("Rendering template " + template);
+  return function <T extends { new (...args: any[]): { name: string } }>(
+    originalConstructor: T
+  ) {
+    // Will replace the class constructor
+    // Syntactic sugar for creating a new class that extends the class that we pass as constructor
+    // Now the decorator will run only when we instantiate the class
+    return class extends originalConstructor {
+      constructor(..._: any[]) {
+        super();
+        console.log("Rendering template " + template);
 
-    const hookElement = document.getElementById(hookID);
+        const hookElement = document.getElementById(hookID);
 
-    const person: Person = new constructor();
-
-    if (hookElement) {
-      hookElement.innerHTML = template;
-      hookElement.querySelector("h1")!.textContent = person.name;
-    }
+        if (hookElement) {
+          hookElement.innerHTML = template;
+          hookElement.querySelector("h1")!.textContent = this.name;
+        }
+      }
+    };
   };
 }
 
@@ -53,6 +61,7 @@ class Person {
   }
 }
 
+// Now the decorator will run only when we instantiate the class
 const person = new Person();
 console.log(person);
 
@@ -132,5 +141,5 @@ const product = new Product("Title", 10);
 const product2 = new Product("Title2", 10);
 
 console.log(
-  "No matter how many objects I instantiate, the decorators will be executed only once, at definition"
+  "No matter how many times I instantiate the class, the decorators will be executed only once, at definition"
 );
