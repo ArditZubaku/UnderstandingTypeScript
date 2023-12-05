@@ -1,4 +1,5 @@
 // A decorator in the end is just a function
+// A decorator is invoked when the executing code reaches it, not when a class instantiated
 
 // When used like this, it should be called not invoked
 // function Logger(constructor: Function) {
@@ -57,7 +58,14 @@ console.log(person);
 
 // ----------------------------------------------------------------
 
+function Log(prototype: any, propertyName: string | Symbol) {
+  console.log("Property decorator");
+  console.log(prototype, propertyName);
+}
+
 class Product {
+  // It executes whenever JS registers this, like whenever it reaches this line when it scans the code.
+  @Log
   private _price: number;
   constructor(private title: string, price: number) {
     this.title = title;
@@ -67,6 +75,10 @@ class Product {
   set price(value: number) {
     if (value > 0) this._price = value;
     else throw new Error("Invalid price, should be positive");
+  }
+
+  get price() {
+    return this._price;
   }
 
   getPriceWithTax(tax: number) {
