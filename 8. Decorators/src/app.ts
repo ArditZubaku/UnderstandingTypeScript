@@ -127,3 +127,10 @@ class Product {
     return this.price * (1 + tax);
   }
 }
+
+const product = new Product("Title", 10);
+const product2 = new Product("Title2", 10);
+
+console.log(
+  "No matter how many objects I instantiate, the decorators will be executed only once, at definition"
+);
