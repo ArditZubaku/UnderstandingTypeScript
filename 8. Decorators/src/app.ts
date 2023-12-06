@@ -96,7 +96,6 @@ function OnMethodDecorator(
   console.log(
     "The accessor decorator could be used for methods too, since it is basically the same"
   );
-
   console.log(target, methodName, descriptor);
 }
 
@@ -105,6 +104,9 @@ function OnParameterDecorator(
   methodName: string | Symbol,
   position: number
 ) {
+  console.log(
+    "TypeScript will ignore the return value of a parameter decorator"
+  );
   console.log("Parameter decorator");
   console.log(target, methodName, position);
 }
@@ -143,3 +145,36 @@ const product2 = new Product("Title2", 10);
 console.log(
   "No matter how many times I instantiate the class, the decorators will be executed only once, at definition"
 );
+
+function AutoBind(
+  _: any,
+  __: string | Symbol,
+  descriptor: PropertyDescriptor
+): PropertyDescriptor {
+  const originalMethod = descriptor.value;
+  const adjustedDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const boundFunction = originalMethod.bind(this);
+      return boundFunction;
+    },
+  };
+
+  return adjustedDescriptor;
+}
+
+class Printer {
+  message = "This works";
+
+  @AutoBind
+  showMessage() {
+    console.log(this.message);
+  }
+}
+
+const button = document.querySelector("button")!;
+
+const p = new Printer();
+
+button.addEventListener("click", p.showMessage);
