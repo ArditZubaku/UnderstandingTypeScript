@@ -178,3 +178,79 @@ const button = document.querySelector("button")!;
 const p = new Printer();
 
 button.addEventListener("click", p.showMessage);
+
+interface ValidatorConfig {
+  [property: string]: {
+    [validatableProperty: string]: string[]; // ['required', 'positive']
+  };
+}
+
+const registeredValidators: ValidatorConfig = {};
+
+function RequiredProperty(target: any, propertyName: string) {
+  registeredValidators[target.constructor.name] = {
+    ...registeredValidators[target.constructor.name],
+    [propertyName]: ["required"],
+  };
+}
+
+function PositiveNumber(target: any, propertyName: string) {
+  registeredValidators[target.constructor.name] = {
+    ...registeredValidators[target.constructor.name],
+    [propertyName]: ["positive"],
+  };
+}
+
+function validate(obj: any): boolean {
+  const objValidatorConfig = registeredValidators[obj.constructor.name];
+
+  if (!objValidatorConfig) {
+    return true;
+  }
+
+  let isValid: boolean = true;
+
+  for (const prop in objValidatorConfig) {
+    for (const validator of objValidatorConfig[prop]) {
+      switch (validator) {
+        case "required":
+          isValid = isValid && !!obj[prop];
+          break;
+        case "positive":
+          isValid = isValid && obj[prop] > 0;
+          break;
+      }
+    }
+  }
+  return isValid;
+}
+class Course {
+  @RequiredProperty
+  title: string;
+  @PositiveNumber
+  price: number;
+
+  constructor(title: string, price: number) {
+    this.title = title;
+    this.price = price;
+  }
+}
+
+const courseForm = document.querySelector("form")!;
+courseForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const titleElement = document.getElementById("title") as HTMLInputElement;
+  const priceElement = document.getElementById("price") as HTMLInputElement;
+
+  const title = titleElement.value;
+  const price = +priceElement.value;
+
+  const createdCourse = new Course(title, price);
+
+  if (!validate(createdCourse)) {
+    alert("Invalid input, please try again");
+    return;
+  }
+
+  console.log({ createdCourse });
+});
